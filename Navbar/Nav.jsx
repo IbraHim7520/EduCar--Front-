@@ -10,7 +10,7 @@ import toast from 'react-hot-toast';
 const Nav = () => {
     const [menuOpen, setMenuOpen] = useState(false);
     const { User , UserLogout, setUser } = useAuth()
-    
+    const [dropdownOpen, setDropdownOpen] = useState(false);
     const handleMenuShow = () => {
         setMenuOpen(!menuOpen);
     };
@@ -40,13 +40,31 @@ const Nav = () => {
                     {
                         User ?
                             <div className='flex justify-center items-center gap-3'>
-                                <div className="avatar">
-                                    <div className="w-10 rounded-full">
-                                        <img src={User.photoURL} alt='User Img'/>
-                                    </div>
+                                <div className="relative">
+                                <div
+                                    className="avatar w-10 rounded-full cursor-pointer"
+                                    onClick={() => setDropdownOpen(!dropdownOpen)}
+                                >
+                                    <img src={User.photoURL} className='rounded-full' alt="User Img" />
                                 </div>
-                                <button onClick={handleUserLogout} className='btn btn-sm lg:btn-md bg-green-500 text-white'>Logout</button>
+                                    {
+                                        dropdownOpen && (
+                                            <div className="absolute top-12 right-0 bg-white shadow-md rounded-sm w-40 z-50">
+                                                <ul className=" space-y-2">
+                                                 <li className='px-4 p-2'>{User.displayName}</li>
+                                                    <li>
+                                                        <Link to="/dashbord" className="block px-4 p-2 hover:bg-gray-100">Dashboard</Link>
+                                                    </li>
+                                                    <li>
+                                                          <button onClick={handleUserLogout} className='btn w-full btn-sm lg:btn-md bg-green-500 text-white'>Logout</button>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        )
+                                }
+                              
                             </div>
+                             </div>
                             :
 
                             <div className='md:flex hidden items-center justify-center gap-3'>
@@ -77,20 +95,38 @@ const Nav = () => {
                 id="mobileMen"
                 className={`mobile-menu absolute top-[70px] left-0 w-full bg-white p-6 transition-all duration-300 ease-in-out ${menuOpen ? 'block' : 'hidden'} md:hidden`}
             >
-                <ul className='flex flex-col justify-start font-semibold xl:text-lg items-center gap-4'>
+                <ul className='flex flex-col justify-center font-semibold xl:text-lg items-start gap-4'>
                     <NavLink>Home</NavLink>
                     <NavLink>All Classes</NavLink>
                     <NavLink>Teach on Skillup</NavLink>
                     {
                         User ?
                             <div className='flex justify-center items-center gap-3'>
-                                <div className="avatar">
-                                    <div className="w-10 rounded-full">
-                                        <img src={User.photoURL} alt='User Image'/>
-                                    </div>
+                                <div className="relative">
+                                <div
+                                    className="avatar w-10 rounded-full cursor-pointer"
+                                    onClick={() => setDropdownOpen(!dropdownOpen)}
+                                >
+                                    <img src={User.photoURL} className='rounded-full' alt="User Img" />
                                 </div>
-                                <button onClick={handleUserLogout} className='btn btn-sm lg:btn-md bg-green-500 text-white'>Logout</button>
+                                    {
+                                        dropdownOpen && (
+                                            <div className="absolute top-12  bg-white shadow-md rounded-sm w-40 z-50">
+                                                <ul className=" space-y-2">
+                                                <li className='px-4 p-2'>{User.displayName}</li>
+                                                    <li>
+                                                        <Link to="/dashbord" className="block px-4 p-2 hover:bg-gray-100">Dashboard</Link>
+                                                    </li>
+                                                    <li>
+                                                          <button onClick={handleUserLogout} className='btn w-full btn-sm lg:btn-md bg-green-500 text-white'>Logout</button>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        )
+                                }
+                              
                             </div>
+                             </div>
                             :
 
                             <div className='md:flex hidden items-center justify-center gap-3'>
@@ -103,6 +139,8 @@ const Nav = () => {
                 </ul>
 
             </div>
+
+            
         </nav>
     );
 };
