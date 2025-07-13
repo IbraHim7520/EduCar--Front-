@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 import { FaFileVideo } from "react-icons/fa";
 const MyCls = () => {
     return (
-        <Link to={"my-enrollment"} className='flex mt-2 bg-green-200 w-fit md:w-full btn items-center justify-start gap-2'>
+        <Link to={"my-classes"} className='flex justify-center bg-green-500 text-lg h-fit py-3 text-white w-full btn items-center md:justify-start'>
         <FaFileVideo size={25}/>
         <p className='hidden md:block'>My Classes</p>
         </Link>

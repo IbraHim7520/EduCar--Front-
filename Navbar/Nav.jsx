@@ -34,9 +34,9 @@ const Nav = () => {
 
             <div className='md:block hidden'>
                 <ul className='flex justify-center font-semibold xl:text-lg items-center gap-4'>
-                    <NavLink>Home</NavLink>
-                    <NavLink>All Classes</NavLink>
-                    <NavLink>Teach on Skillup</NavLink>
+                    <NavLink to={"/"} className={({isActive})=> isActive ? 'text-green-500' : 'text-black' }>Home</NavLink>
+                    <NavLink to={"/get-all-classes"}  className={({isActive})=> isActive ? 'text-green-500' : 'text-black' }>All Classes</NavLink>
+                    <NavLink to={"/teach-in-here"} className={({isActive})=> isActive ? 'text-green-500' : 'text-black' }>Teach on Skillup</NavLink>
                     {
                         User ?
                             <div className='flex justify-center items-center gap-3'>
@@ -51,7 +51,7 @@ const Nav = () => {
                                         dropdownOpen && (
                                             <div className="absolute top-12 right-0 bg-white shadow-md rounded-sm w-40 z-50">
                                                 <ul className=" space-y-2">
-                                                 <li className='px-4 p-2'>{User.displayName}</li>
+                                                 <li className='px-4 p-2'>{User.displayName || "No Name"}</li>
                                                     <li>
                                                         <Link to="/dashbord" className="block px-4 p-2 hover:bg-gray-100">Dashboard</Link>
                                                     </li>
@@ -96,9 +96,9 @@ const Nav = () => {
                 className={`mobile-menu absolute top-[70px] left-0 w-full bg-white p-6 transition-all duration-300 ease-in-out ${menuOpen ? 'block' : 'hidden'} md:hidden`}
             >
                 <ul className='flex flex-col justify-center font-semibold xl:text-lg items-start gap-4'>
-                    <NavLink>Home</NavLink>
-                    <NavLink>All Classes</NavLink>
-                    <NavLink>Teach on Skillup</NavLink>
+                    <NavLink to={"/"} className={({isActive})=> isActive ? 'text-green-500' : 'text-black' }>Home</NavLink>
+                    <NavLink to={"/get-all-classes"}  className={({isActive})=> isActive ? 'text-green-500' : 'text-black' }>All Classes</NavLink>
+                    <NavLink to={"/teach-in-here"} className={({isActive})=> isActive ? 'text-green-500' : 'text-black' }>Teach on Skillup</NavLink>
                     {
                         User ?
                             <div className='flex justify-center items-center gap-3'>
@@ -113,7 +113,7 @@ const Nav = () => {
                                         dropdownOpen && (
                                             <div className="absolute top-12  bg-white shadow-md rounded-sm w-40 z-50">
                                                 <ul className=" space-y-2">
-                                                <li className='px-4 p-2'>{User.displayName}</li>
+                                                <li className='px-4 p-2'>{User.displayName || "No Name"}</li>
                                                     <li>
                                                         <Link to="/dashbord" className="block px-4 p-2 hover:bg-gray-100">Dashboard</Link>
                                                     </li>

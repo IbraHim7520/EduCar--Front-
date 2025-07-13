@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import loginImg from "../imgs/loginImg.jpg"
-import { Link, useNavigate } from 'react-router';
+import { Link, useNavigate, useParams } from 'react-router';
 import { useForm } from 'react-hook-form';
 import useAuth from '../CustomHooks/useAuth';
 import toast from 'react-hot-toast';
@@ -8,9 +8,10 @@ import auth from "../Firebase/firebase.config.js"
 import { updateProfile } from 'firebase/auth';
 import axios from 'axios';
 import Loading from '../Components/Loading.jsx';
+
 const Signup = () => {
     const navigate = useNavigate()
-    const {register  , formState:{errors}, handleSubmit} = useForm()
+    const {register   , handleSubmit, reset} = useForm()
     const {SignupUser , GoogleLogin} = useAuth()
     const [loading , setLoading] = useState(false)
     const handleGoogleSignup = () =>{
@@ -18,9 +19,21 @@ const Signup = () => {
         GoogleLogin()
         .then(result => {
             if(result){
-                setLoading(false)
-                toast.success('Signup Succesfull!')
-                navigate('/')
+            const RoleData = {
+                Name: result?.user?.displayName || "No Name",
+                Email: result?.user?.email,
+                Role: "Student"
+            }
+            axios.post(`${import.meta.env.VITE_API_URL}/userrole`, {RoleData})
+            .then(data =>{
+                if(data?.data){
+                    navigate("/")
+                    setLoading(false)
+                    toast.success("Signup Successfull!")
+                }
+            }).catch(err=>{
+                console.log(err)
+            })
             }
         }).catch(err =>{
             setLoading(false)
@@ -35,15 +48,35 @@ const Signup = () => {
         const response = await axios.post(`https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_API_KEY}`, imgForm)
         const userImg = response?.data?.data?.url
 
+     
+
         SignupUser(email, password)
         .then(result => {
-            toast.success("Signup Successful!")
-            navigate("/")
-            setLoading(false)
+            updateProfile(auth.currentUser, {
+                displayName: username , photoURL: userImg
+            }).then(()=>{
+                toast.success("Signup Successful!")
+            const RoleData = {
+                Name: result?.user?.displayName || "No Name",
+                Email: result?.user?.email,
+                Role: "Student"
+            }
+            axios.post(`${import.meta.env.VITE_API_URL}/userrole`, {RoleData})
+            .then(data =>{
+                if(data?.data){
+                    navigate("/")
+                    
+                }
+            }).catch(err=>{
+                console.log(err)
+            })
+            })
+            setLoading(false);
+            reset()
         }).catch(err=>{
             setLoading(false)
             toast.error(err)
-          //  console.log(err)
+            reset()
         })
     }
     return (
@@ -55,8 +88,8 @@ const Signup = () => {
             <div class="w-full flex flex-col items-center justify-center">
 
         <form onSubmit={handleSubmit(onSubmit)} class="md:w-96 w-80 flex flex-col items-center justify-center">
-            <h2 class="text-4xl text-gray-900 font-medium">Sign up</h2>
-            <p class="text-sm text-gray-500/90 mt-3">Welcome back! Please sign in to continue</p>
+            <h2 className="text-4xl text-gray-900 font-medium">Sign up</h2>
+            <p className="text-sm text-gray-500/90 mt-3">Welcome back! Please sign in to continue</p>
 
             <button onClick={handleGoogleSignup} type="button" class="w-full mt-8 bg-gray-500/10 flex items-center justify-center h-12 rounded-full">
                 {
@@ -68,11 +101,10 @@ const Signup = () => {
             </button>
 
             <div class="flex items-center gap-4 w-full my-5">
-                <div class="w-full h-px bg-gray-300/90"></div>
-                <p class="w-full text-nowrap text-sm text-gray-500/90">or sign in with email</p>
-                <div class="w-full h-px bg-gray-300/90"></div>
-            </div>
-
+                <div className="w-full h-px bg-gray-300/90"></div>
+                <p className="w-full text-nowrap text-sm text-gray-500/90">or sign in with email</p>
+                <div className="w-full h-px bg-gray-300/90"></div>
+            </div>         
             <div class="flex mb-5 items-center w-full bg-transparent border border-gray-300/60 h-12 rounded-full overflow-hidden pl-6 gap-2">
                 <input {...register("image", {required:true})} type="file" placeholder="Username" class="bg-transparent text-gray-500/80 placeholder-gray-500/80 outline-none w-full l" required></input>                
             </div> 

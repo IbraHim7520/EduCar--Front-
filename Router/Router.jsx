@@ -2,8 +2,10 @@ import { createBrowserRouter } from "react-router";
 import Root from "../Pages/Root";
 import HomePage from "../Pages/HomePage";
 import Login from "../Pages/Login";
+import GetAllClass from "../Pages/AllClass"
 import Signup from "../Pages/Signup";
 import Dashbord from "../Dashbord/Dashbord";
+import TeachOnSkillUp from "../Pages/TeachOnSkillUp";
 import MyProfile from "../Dashbord/DbordPage/MyProfile"
 
 //---------------Base users page--------------------------
@@ -19,6 +21,7 @@ import AllClass from "../Dashbord/DbordPage/AllClass"
 import TeacherReq from "../Dashbord/DbordPage/TcherReq"
 
 import { Component } from "react";
+
 
 const BaseUser = [
     {index:true , path: "my-enrollment" , Component:MyEnrollClass },
@@ -44,6 +47,14 @@ const router = createBrowserRouter([
             {
                 index: true,
                 Component: HomePage
+            },
+            {
+                path: "/get-all-classes",
+                Component: GetAllClass
+            },
+            {
+                path:"/teach-in-here",
+                Component: TeachOnSkillUp
             }
 
         ]
@@ -59,7 +70,19 @@ const router = createBrowserRouter([
     {
         path: "/dashbord",
         Component:Dashbord,
-        children: BaseUser
+        children: [
+            {index:true , path: "my-enrollment" , Component:MyEnrollClass },
+            { path:"my-profile", Component:MyProfile },
+
+            {path : "my-classes", Component: MyClass},
+            {path:"add-classes", Component:AddClass},
+            {path:"my-profile",Component:MyProfile},
+
+            {path: "all-users", Component:Users },
+            {path: "all-classes", Component:AllClass},
+            {path:"teacher-requests", Component:TeacherReq},
+            {path:"my-profile",Component:MyProfile}
+        ]
     }
 ])
 export default router

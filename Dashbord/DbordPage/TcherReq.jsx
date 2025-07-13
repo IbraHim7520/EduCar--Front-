@@ -1,9 +1,88 @@
-import React from 'react';
-
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import Table from '../../Components/Table';
+import NoDataImage from "../../imgs/nodata.jpg"
+import toast from 'react-hot-toast';
 const TcherReq = () => {
+    const [ReqInfo, setRequestInfo] = useState([]);
+    const [loading, setLoading] = useState(true)
+    
+    useEffect(() => {
+        axios.get(`${import.meta.env.VITE_API_URL}/get-teacher-request`)
+            .then(data => {
+                setRequestInfo(data?.data);
+                setLoading(false)
+            })
+    }, [])
+
+  const updateRequestStatus = (id) =>{
+        axios.put(`${import.meta.env.VITE_API_URL}/update-role/${id}`)
+        .then(data=>{
+            if(data?.data?.modifiedCount > 0){
+                toast.success("Request apprpved!");
+                 const remainingInfo = ReqInfo.filter(info => info._id!=id);
+                 setRequestInfo(remainingInfo)
+                 toast.success("Request Approved")
+            }
+        })
+    }
+    const handleRequestReject = (id) =>{
+        axios.delete(`${import.meta.env.VITE_API_URL}/delete-req/${id}`)
+        .then(data=>{
+            if(data?.data){
+                const remainigInfo = ReqInfo.filter(info => info._id!=id)
+                setRequestInfo((remainigInfo))
+                toast.success("Request Rejected")
+            }
+        })
+    }
     return (
         <div>
-            hello from admin teacher req page
+            {
+                loading ?
+                    <div className='w-full min-h-screen flex flex-col justify-center items-center'>
+                        <span className='loading loading-spinner text-warning'></span>
+                        <p className='text-xl font-semibold'>loading</p>
+                    </div>
+                    :
+                    <div>
+                        {
+                        ReqInfo.length == 0 ?
+                            <div className='w-full min-h-screen flex flex-col justify-center items-center'>
+                                <img src={NoDataImage} className='max-w-72'></img>
+                                <h1 className='text-center text-3xl font-semibold'>No data to show</h1>
+                            </div>
+                            :
+                            <div className="overflow-x-auto">
+                                <table className="table">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>Image</th>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Title</th>
+                                            <th>Experience</th>
+                                            <th>Category</th>
+                                            <th>Status</th>
+                                            <th>Accept</th>
+                                            <th>Reject</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {
+                                            ReqInfo.map((request, index) => <Table 
+                                            updateRequestStatus={updateRequestStatus}  
+                                            key={index} index={index}  
+                                            handleRequestReject={handleRequestReject}
+                                            request={request}></Table>)
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                    }
+                    </div>
+            }
         </div>
     );
 };
