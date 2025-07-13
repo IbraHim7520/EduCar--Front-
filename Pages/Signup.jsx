@@ -22,7 +22,9 @@ const Signup = () => {
             const RoleData = {
                 Name: result?.user?.displayName || "No Name",
                 Email: result?.user?.email,
-                Role: "Student"
+                Role: "Student",
+                isAdmin: false,
+                Image: result?.user?.photoURL
             }
             axios.post(`${import.meta.env.VITE_API_URL}/userrole`, {RoleData})
             .then(data =>{
@@ -59,7 +61,9 @@ const Signup = () => {
             const RoleData = {
                 Name: result?.user?.displayName || "No Name",
                 Email: result?.user?.email,
-                Role: "Student"
+                Role: "Student",
+                isAdmin: false,
+                Image: result?.user?.photoURL
             }
             axios.post(`${import.meta.env.VITE_API_URL}/userrole`, {RoleData})
             .then(data =>{

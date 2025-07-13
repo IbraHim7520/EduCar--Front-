@@ -6,7 +6,7 @@ import toast from 'react-hot-toast';
 const TcherReq = () => {
     const [ReqInfo, setRequestInfo] = useState([]);
     const [loading, setLoading] = useState(true)
-    
+
     useEffect(() => {
         axios.get(`${import.meta.env.VITE_API_URL}/get-teacher-request`)
             .then(data => {
@@ -27,17 +27,15 @@ const TcherReq = () => {
         })
     }
     const handleRequestReject = (id) =>{
-        axios.delete(`${import.meta.env.VITE_API_URL}/delete-req/${id}`)
+        axios.put(`${import.meta.env.VITE_API_URL}/reject-req/${id}`)
         .then(data=>{
             if(data?.data){
-                const remainigInfo = ReqInfo.filter(info => info._id!=id)
-                setRequestInfo((remainigInfo))
                 toast.success("Request Rejected")
             }
         })
     }
     return (
-        <div>
+        <div className='flex flex-col lg:overflow-x-hidden  overflow-x-auto'>
             {
                 loading ?
                     <div className='w-full min-h-screen flex flex-col justify-center items-center'>
@@ -58,7 +56,7 @@ const TcherReq = () => {
                                     <thead>
                                         <tr>
                                             <th></th>
-                                            <th>Image</th>
+                                            <th>Image</th>  
                                             <th>Name</th>
                                             <th>Email</th>
                                             <th>Title</th>

@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { useQuery } from '@tanstack/react-query';
 
 const TeachOnSkillUp = () => {
     const {User, UserRole} = useAuth()
@@ -17,6 +18,16 @@ const TeachOnSkillUp = () => {
         }
     }, [User , setValue])
 
+    //Get User Status using TanstackQuery
+    const { data, isLoading, error, refetch } = useQuery({
+        queryKey:["getUserStatus"],
+        enabled: !!User?.email,
+        queryFn: async()=>{
+            const StatusRes = await axios.get(`${import.meta.env.VITE_API_URL}/get_one_req/${User?.email}`)
+            return StatusRes
+        }
+    })
+   
     const onSubmit = async(data) =>{
         if (!User){
             toast.error("Please login to be a teacher")
@@ -121,10 +132,19 @@ const TeachOnSkillUp = () => {
                 </div>
 
                 {/* Submit Button */}
-                <div className="text-center">
-                    <button type="submit" className={UserRole?.Role === "Teacher" ? "btn disabled:" : "btn btn-success"}>
-                        Submit for Review
-                    </button>
+                <div className='text-center'>
+                    {
+                        UserRole?.Role === "Admin" ?
+                            <button className="btn btn-disabled" tabIndex="-1" role="button" aria-disabled="true">
+                               Submit
+                            </button>
+                            :
+                            <div className='text-center'>
+                                <button type="submit" className={UserRole?.Role === "Teacher" ? "btn btn-disabled:" : "btn btn-success"}>
+                                    {data?.data.status === "Rejected" ? "Request for another" : "Submit"}
+                                </button>
+                            </div>
+                    }
                 </div>
             </form>
         </div>
