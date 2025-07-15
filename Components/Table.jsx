@@ -15,13 +15,17 @@ const Table = ({index , request, updateRequestStatus , handleRequestReject}) => 
         <td>{request.Category}</td>
         <td>{request.status}</td>
        <td>
-        <button onClick={()=> updateRequestStatus(request._id)} className='btn btn-sm bg-green-500 text-white'>Approve</button>
+        <button onClick={()=> updateRequestStatus(request._id)} disabled={request.status == "Approved" ? true : false} className='btn btn-sm bg-green-500 text-white'>
+            Approve
+        </button>
        </td>
        <td>
-        <button onClick={()=>handleRequestReject(request._id)}  className='btn btn-sm bg-red-500 text-white'>Reject</button>
+        <button onClick={()=>handleRequestReject(request._id)} disabled={request.status == "Approved" ? true : false} className='btn btn-sm bg-red-500 text-white'>
+            Reject
+        </button>
        </td>
       </tr>
     );
 };
-
+// request.status == "Rejected" ?
 export default Table;

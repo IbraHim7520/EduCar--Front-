@@ -10,10 +10,12 @@ const Login = () => {
     const {register , handleSubmit , formState: {errors} } = useForm()
     const navigate = useNavigate()
     const [loading , setLoading] = useState(false)
+
     const onSubmit = (data) =>{
         setLoading(true)
-        const {email , pass} = data
-        LoginUser(email , pass)
+        const {email , password} = data
+        LoginUser(email , password)
+     
             .then((res)=> {
                 if(res){
                     setLoading(false)
@@ -21,6 +23,7 @@ const Login = () => {
                     navigate("/");
                 }
             }).catch(err=>{
+                console.log(err)
                 setLoading(false)
                 toast.error("Invalid credentials!")
             })

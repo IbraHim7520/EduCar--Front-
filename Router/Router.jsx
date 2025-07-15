@@ -21,6 +21,8 @@ import AllClass from "../Dashbord/DbordPage/AllClass"
 import TeacherReq from "../Dashbord/DbordPage/TcherReq"
 
 import { Component } from "react";
+import ClassDetails from "../Pages/ClassDetails";
+import axios from "axios";
 
 
 const BaseUser = [
@@ -55,6 +57,11 @@ const router = createBrowserRouter([
             {
                 path:"/teach-in-here",
                 Component: TeachOnSkillUp
+            },
+            {
+                path: "class-details/:id",
+                loader : async({params})=> await axios.get(`${import.meta.env.VITE_API_URL}/get-class/${params.id}`), 
+                Component:ClassDetails
             }
 
         ]

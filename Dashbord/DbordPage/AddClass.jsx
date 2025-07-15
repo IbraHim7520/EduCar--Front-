@@ -15,9 +15,13 @@ const AddClass = () => {
       ImageForm.append('image', Image[0]);
        const response = await axios.post(`https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_API_KEY}`, ImageForm)
 
-        data.isAproved = false
+        data.ClassPrice = parseFloat(data.ClassPrice);
+        data.Status = "Pending"
         data.EnrolledBy = []
         data.Image = response?.data?.data?.url
+        data.Reviews = [];
+        data.PublishAsgnment= []
+        data.PostedAsgnment = []
         
         const result = await axios.post(`${import.meta.env.VITE_API_URL}/insert-class`, data )
        if(result?.data?.insertedId){

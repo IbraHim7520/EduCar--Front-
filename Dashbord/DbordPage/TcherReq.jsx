@@ -15,24 +15,21 @@ const TcherReq = () => {
             })
     }, [])
 
-  const updateRequestStatus = (id) =>{
-        axios.put(`${import.meta.env.VITE_API_URL}/update-role/${id}`)
-        .then(data=>{
-            if(data?.data?.modifiedCount > 0){
-                toast.success("Request apprpved!");
-                 const remainingInfo = ReqInfo.filter(info => info._id!=id);
-                 setRequestInfo(remainingInfo)
-                 toast.success("Request Approved")
-            }
-        })
+  const updateRequestStatus = async(id) =>{
+        const result = await axios.put(`${import.meta.env.VITE_API_URL}/update-role/${id}`)
+        if(result?.data?.modifiedCount > 0 ){
+            toast.success("Request Approved!")
+        }else{
+            toast.error("Somehing went wrong!")
+        }
     }
-    const handleRequestReject = (id) =>{
-        axios.put(`${import.meta.env.VITE_API_URL}/reject-req/${id}`)
-        .then(data=>{
-            if(data?.data){
-                toast.success("Request Rejected")
-            }
-        })
+    const handleRequestReject = async(id) =>{
+    const result = await axios.put(`${import.meta.env.VITE_API_URL}/reject-req/${id}`)
+        if(result?.data?.modifiedCount > 0 ){
+            toast.success("Request Approved!")
+        }else{
+            toast.error("Somehing went wrong!")
+        }
     }
     return (
         <div className='flex flex-col lg:overflow-x-hidden  overflow-x-auto'>
