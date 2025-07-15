@@ -144,7 +144,7 @@ const TeachOnSkillUp = () => {
                             {/* Submit Button */}
                             <div className='text-center'>
                                 {
-                                    data?.data.status === "Pending" || data?React.data.status ==="Rejected" ?
+                                    data?.data.status === "Pending" || data?.data.status === "Rejected" ?
                                     <button className='btn px-12 bg-green-500 text-white' type='submit'>Submit for Review</button>
                                     :
                                     <button className='btn px-12 btn-disabled bg-green-500 text-white' type='submit'>Submit for Review</button>
@@ -156,7 +156,7 @@ const TeachOnSkillUp = () => {
 
             }
         </div>
-        // data?.data.status
+     
     );
 };
 

@@ -4,8 +4,10 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import Table from '../../Components/Table';
 import UsersTable from '../../Components/UsersTable';
+import toast from 'react-hot-toast';
 const Users = () => {
     const { UserRole } = useAuth()
+
     const [users , setusers] = useState([])
     const { data, isPending, error, refetch } = useQuery({
         queryKey: ["getAllUsers"],
@@ -19,6 +21,14 @@ const Users = () => {
             setusers(data?.data);
         }
     },  [data?.data] )
+    const handleMakeAdmin = async(id) =>{
+        const result = await axios.put(`${import.meta.env.VITE_API_URL}//make-admin/${id}`)
+          if(result?.data?.modifiedCount > 0 ){
+            toast.success("Successfully make Admin.")
+        }else{
+            toast.error("Somehing went wrong!")
+        }
+    }
     return (
         <div className=' flex flex-col lg:overflow-x-hidden  overflow-x-auto'>
             {
@@ -44,6 +54,7 @@ const Users = () => {
                                 {
                                     users.map((request, index) => <UsersTable
                                         key={index} index={index}
+                                        handleMakeAdmin={handleMakeAdmin}
                                         request={request}></UsersTable>)
                                 }
                             </tbody>

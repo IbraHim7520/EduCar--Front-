@@ -32,6 +32,13 @@ const AllClass = () => {
             toast.success("Class has been approved")
         }
     }
+
+    const handleClassReject = (id) =>{
+        const result = axios.put(`${import.meta.env.VITE_API_URL}/reject-cls/${id}`)
+        if(result?.data.modifiedCount > 0){
+            toast.success("Class has been rejectted")
+        }
+    }
  //   console.log(classinfo)
     return (
         <div>
@@ -63,6 +70,7 @@ const AllClass = () => {
                                             <th>Price</th>
                                             <th>Aproved</th>
                                             <th>Accept</th>
+                                            <th>Reject</th>
                                           
                                         </tr>
                                     </thead>
@@ -71,6 +79,7 @@ const AllClass = () => {
                                             classinfo.map((request, index) => <AllClassTable 
                                             key={index} index={index}  
                                             handleApproveClass={handleApproveClass}
+                                            handleClassReject={handleClassReject}
                                             request={request}></AllClassTable>)
                                         }
                                     </tbody>
