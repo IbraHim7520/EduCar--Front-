@@ -16,9 +16,10 @@ const TcherReq = () => {
     }, [])
 
   const updateRequestStatus = async(id) =>{
-    setAproveInfo("Approved")
+    
         const result = await axios.put(`${import.meta.env.VITE_API_URL}/update-role/${id}`)
         if(result?.data?.modifiedCount > 0 ){
+            setAproveInfo("Approved")
             toast.success("Request Approved!")
         }else{
             toast.error("Somehing went wrong!")
@@ -26,8 +27,10 @@ const TcherReq = () => {
     }
     const handleRequestReject = async(id) =>{
     const result = await axios.put(`${import.meta.env.VITE_API_URL}/reject-req/${id}`)
+    console.log(result?.data);
         if(result?.data?.modifiedCount > 0 ){
-            toast.success("Request Approved!")
+            setAproveInfo("Rejected")
+            toast.success("Request Rejected!")
         }else{
             toast.error("Somehing went wrong!")
         }

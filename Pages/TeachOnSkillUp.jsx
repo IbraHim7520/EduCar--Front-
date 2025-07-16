@@ -161,7 +161,7 @@ const TeachOnSkillUp = () => {
                                 requestStatus === "Pending" ?
                                 <button onClick={()=>handleSubmit(onSubmit) } className='px-16 btn bg-green-500 text-white' disabled>Submit</button>
                                 :
-                                <button onClick={()=>handleSubmit(onSubmit) } className='px-16 btn bg-green-500 text-white'>Submit</button>
+                                <button onClick={()=>handleSubmit(onSubmit) } className='px-16 btn bg-green-500 text-white'>Submit for another review</button>
                                }
                             </div>
                         </form>

@@ -19,12 +19,12 @@ const Table = ({index , request, updateRequestStatus , handleRequestReject , apr
         <td>{request.Category}</td>
         <td>{request.status}</td>
        <td>
-        <button onClick={()=> updateRequestStatus(request._id)} disabled={request.Status == "Approved"  || aproveInfo ==="Approved" ? true : false} className='btn btn-sm bg-green-500 text-white'>
+        <button onClick={()=> updateRequestStatus(request._id)} disabled={request.Status == "Approved"  || aproveInfo ==="Approved"  || request.Status === "Rejected" || aproveInfo ==="Rejected" ? true : false} className='btn btn-sm bg-green-500 text-white'>
             Approve
         </button>
        </td>
        <td>
-        <button onClick={()=>handleRequestReject(request._id)} disabled={request.Status == "Approved" || aproveInfo === "Approved" ? true : false} className='btn btn-sm bg-red-500 text-white'>
+        <button onClick={()=>handleRequestReject(request._id)} disabled={request.Status == "Approved" || aproveInfo === "Approved" || request.Status === "Rejected" || aproveInfo ==="Rejected" ? true : false} className='btn btn-sm bg-red-500 text-white'>
             Reject
         </button>
        </td>
