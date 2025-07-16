@@ -8,42 +8,56 @@ import Swal from 'sweetalert2';
 import unableToSubmitImg from "../imgs/unable.jpg"
 import { useQuery } from '@tanstack/react-query';
 
+
 const TeachOnSkillUp = () => {
     const { User, UserRole } = useAuth()
-    const navigate = useNavigate();
+
+    const [requestStatus , setRequestStatus] = useState('');
+  
     const { register, handleSubmit, setValue, formState: { errors }, reset } = useForm()
 
-    useEffect(() => {
-        if (User) {
-            setValue("TeacherMail", User?.email)
+    useEffect( ()=>{
+        if(User?.email && User?.photoURL){
+            setValue("TeacherMail" , User.email)
+            setValue("TeacherImage", User.photoURL)
         }
-    }, [User, setValue])
+    } , [User?.email , setValue, User?.photoURL] )
 
-    //Get User Status using TanstackQuery
-    const { data, isLoading, error, refetch } = useQuery({
-        queryKey: ["getUserStatus"],
-        enabled: !!User?.email,
-        queryFn: async () => {
-            const StatusRes = await axios.get(`${import.meta.env.VITE_API_URL}/get_one_req/${User?.email}`)
-            return StatusRes
+    const insertID = localStorage.getItem("insertID")
+    console.log(insertID)
+    const {data} = useQuery({
+        queryKey: ["getTeacherReq"],
+        queryFn: async()=>{
+            const result = axios.get(`${import.meta.env.VITE_API_URL}/get-tecReq/${insertID}`)
+            return result
         }
     })
 
+    useEffect(()=>{
+        if(data?.data?.Status){
+            setRequestStatus(data?.data?.Status);
+        }
+    }, [data])
+  
     const onSubmit = async (data) => {
         if (!User) {
             toast.error("Please login to be a teacher")
             return
         }
-        data.image = User?.photoURL
-        data.status = "Pending"
-        await axios.post(`${import.meta.env.VITE_API_URL}/to-be-teacher-request`, data)
-            .then(response => {
-                toast.success("Submitted")
-                reset()
-            }).catch(err => {
-                toast.error("Failed to submit! Please try again.")
-            })
+        data.Status = "Pending"
+       // console.log(data)
+        const result = await axios.post(`${import.meta.env.VITE_API_URL}/post-teachereq` , {data})
+       // console.log(result);
+        if(result?.data){
+            toast.success("Application submission success!")
+            setRequestStatus("Pending");
+            console.log(result?.data?.insertedId)
+            localStorage.setItem("insertID", result?.data?.insertedId);
+            reset();
+        }
+        
     }
+    //console.log(submit)
     return (
         <div>
             {
@@ -143,16 +157,15 @@ const TeachOnSkillUp = () => {
 
                             {/* Submit Button */}
                             <div className='text-center'>
-                                {
-                                    data?.data.status === "Pending" || data?.data.status === "Rejected" ?
-                                    <button className='btn px-12 bg-green-500 text-white' type='submit'>Submit for Review</button>
-                                    :
-                                    <button className='btn px-12 btn-disabled bg-green-500 text-white' type='submit'>Submit for Review</button>
-                                }
+                               {
+                                requestStatus === "Pending" ?
+                                <button onClick={()=>handleSubmit(onSubmit) } className='px-16 btn bg-green-500 text-white' disabled>Submit</button>
+                                :
+                                <button onClick={()=>handleSubmit(onSubmit) } className='px-16 btn bg-green-500 text-white'>Submit</button>
+                               }
                             </div>
                         </form>
                     </div>
-
 
             }
         </div>

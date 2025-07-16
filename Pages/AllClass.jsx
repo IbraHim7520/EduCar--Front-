@@ -24,8 +24,8 @@ const AllClass = () => {
         <div className='w-full'>
             {
                 loading ?
-                    <div className='w-full min-h-screen justify-center items-center flex-col'>
-                        <span className='loading loading-spinner text-green-500'></span>
+                    <div className='w-full flex h-screen flex-col justify-center items-center '>
+                        <span className='loading loading-spinner text-2xl text-green-500'></span>
                         <p className='text-xl text-black'>Loading....</p>
                     </div>
                     :

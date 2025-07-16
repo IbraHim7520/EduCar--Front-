@@ -29,11 +29,13 @@ const Signup = () => {
             axios.post(`${import.meta.env.VITE_API_URL}/userrole`, {RoleData})
             .then(data =>{
                 if(data?.data){
+                    console.log(data?.data)
                     navigate("/")
                     setLoading(false)
                     toast.success("Signup Successfull!")
                 }
             }).catch(err=>{
+                setLoading(false)
                 console.log(err)
             })
             }

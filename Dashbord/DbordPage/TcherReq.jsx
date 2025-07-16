@@ -6,7 +6,7 @@ import toast from 'react-hot-toast';
 const TcherReq = () => {
     const [ReqInfo, setRequestInfo] = useState([]);
     const [loading, setLoading] = useState(true)
-
+  const [aproveInfo , setAproveInfo] = useState('')
     useEffect(() => {
         axios.get(`${import.meta.env.VITE_API_URL}/get-teacher-request`)
             .then(data => {
@@ -16,6 +16,7 @@ const TcherReq = () => {
     }, [])
 
   const updateRequestStatus = async(id) =>{
+    setAproveInfo("Approved")
         const result = await axios.put(`${import.meta.env.VITE_API_URL}/update-role/${id}`)
         if(result?.data?.modifiedCount > 0 ){
             toast.success("Request Approved!")
@@ -70,6 +71,7 @@ const TcherReq = () => {
                                             updateRequestStatus={updateRequestStatus}  
                                             key={index} index={index}  
                                             handleRequestReject={handleRequestReject}
+                                            aproveInfo={aproveInfo}
                                             request={request}></Table>)
                                         }
                                     </tbody>

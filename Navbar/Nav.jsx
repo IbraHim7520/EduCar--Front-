@@ -9,16 +9,16 @@ import toast from 'react-hot-toast';
 
 const Nav = () => {
     const [menuOpen, setMenuOpen] = useState(false);
-    const { User , UserLogout, setUser } = useAuth()
+    const { User, UserLogout, setUser } = useAuth()
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const handleMenuShow = () => {
         setMenuOpen(!menuOpen);
     };
-    const handleUserLogout = () =>{
-        UserLogout().then( ()=>{
+    const handleUserLogout = () => {
+        UserLogout().then(() => {
             setUser(null)
             toast.success("Logout Successfull!")
-        } )
+        })
     }
 
     return (
@@ -34,37 +34,36 @@ const Nav = () => {
 
             <div className='md:block hidden'>
                 <ul className='flex justify-center font-semibold xl:text-lg items-center gap-4'>
-                    <NavLink to={"/"} className={({isActive})=> isActive ? 'text-green-500' : 'text-black' }>Home</NavLink>
-                    <NavLink to={"/get-all-classes"}  className={({isActive})=> isActive ? 'text-green-500' : 'text-black' }>All Classes</NavLink>
-                    <NavLink to={"/teach-in-here"} className={({isActive})=> isActive ? 'text-green-500' : 'text-black' }>Teach on Skillup</NavLink>
+                    <NavLink to={"/"} className={({ isActive }) => isActive ? 'text-green-500' : 'text-black'}>Home</NavLink>
+                    <NavLink to={"/get-all-classes"} className={({ isActive }) => isActive ? 'text-green-500' : 'text-black'}>All Classes</NavLink>
+                    <NavLink to={"/teach-in-here"} className={({ isActive }) => isActive ? 'text-green-500' : 'text-black'}>Teach on Skillup</NavLink>
                     {
                         User ?
                             <div className='flex justify-center items-center gap-3'>
                                 <div className="relative">
-                                <div
-                                    className="avatar w-10 rounded-full cursor-pointer"
-                                    onClick={() => setDropdownOpen(!dropdownOpen)}
-                                >
-                                    <img src={User.photoURL} className='rounded-full' alt="User Img" />
-                                </div>
+                                    <div className="avatar">
+                                        <div onClick={() => setDropdownOpen(!dropdownOpen)} className="ring-primary ring-offset-base-100 w-8 rounded-full ring-2 ring-offset-2">
+                                            <img src={User.photoURL} />
+                                        </div>
+                                    </div>
                                     {
                                         dropdownOpen && (
                                             <div className="absolute top-12 right-0 bg-white shadow-md rounded-sm w-40 z-50">
                                                 <ul className=" space-y-2">
-                                                 <li className='px-4 p-2'>{User.displayName || "No Name"}</li>
+                                                    <li className='px-4 p-2'>{User.displayName || "No Name"}</li>
                                                     <li>
                                                         <Link to="/dashbord" className="block px-4 p-2 hover:bg-gray-100">Dashboard</Link>
                                                     </li>
                                                     <li>
-                                                          <button onClick={handleUserLogout} className='btn w-full btn-sm lg:btn-md bg-green-500 text-white'>Logout</button>
+                                                        <button onClick={handleUserLogout} className='btn w-full btn-sm lg:btn-md bg-green-500 text-white'>Logout</button>
                                                     </li>
                                                 </ul>
                                             </div>
                                         )
-                                }
-                              
+                                    }
+
+                                </div>
                             </div>
-                             </div>
                             :
 
                             <div className='md:flex hidden items-center justify-center gap-3'>
@@ -93,40 +92,39 @@ const Nav = () => {
             {/* Mobile menu */}
             <div
                 id="mobileMen"
-                className={`mobile-menu absolute top-[70px] left-0 w-full bg-white p-6 transition-all duration-300 ease-in-out ${menuOpen ? 'block' : 'hidden'} md:hidden`}
+                className={`mobile-menu absolute top-[70px] left-0 w-full bg-base-300 shadow-xl shadow-green-200 p-6 transition-all duration-300 ease-in-out ${menuOpen ? 'block' : 'hidden'} md:hidden`}
             >
                 <ul className='flex flex-col justify-center font-semibold xl:text-lg items-start gap-4'>
-                    <NavLink to={"/"} className={({isActive})=> isActive ? 'text-green-500' : 'text-black' }>Home</NavLink>
-                    <NavLink to={"/get-all-classes"}  className={({isActive})=> isActive ? 'text-green-500' : 'text-black' }>All Classes</NavLink>
-                    <NavLink to={"/teach-in-here"} className={({isActive})=> isActive ? 'text-green-500' : 'text-black' }>Teach on Skillup</NavLink>
+                    <NavLink to={"/"} className={({ isActive }) => isActive ? 'text-green-500' : 'text-black'}>Home</NavLink>
+                    <NavLink to={"/get-all-classes"} className={({ isActive }) => isActive ? 'text-green-500' : 'text-black'}>All Classes</NavLink>
+                    <NavLink to={"/teach-in-here"} className={({ isActive }) => isActive ? 'text-green-500' : 'text-black'}>Teach on Skillup</NavLink>
                     {
                         User ?
                             <div className='flex justify-center items-center gap-3'>
                                 <div className="relative">
-                                <div
-                                    className="avatar w-10 rounded-full cursor-pointer"
-                                    onClick={() => setDropdownOpen(!dropdownOpen)}
-                                >
-                                    <img src={User.photoURL} className='rounded-full' alt="User Img" />
-                                </div>
+                                    <div className="avatar">
+                                        <div onClick={() => setDropdownOpen(!dropdownOpen)} className="ring-primary ring-offset-base-100 w-8 rounded-full ring-2 ring-offset-2">
+                                            <img src={User.photoURL} />
+                                        </div>
+                                    </div>
                                     {
                                         dropdownOpen && (
                                             <div className="absolute top-12  bg-white shadow-md rounded-sm w-40 z-50">
                                                 <ul className=" space-y-2">
-                                                <li className='px-4 p-2'>{User.displayName || "No Name"}</li>
+                                                    <li className='px-4 p-2'>{User.displayName || "No Name"}</li>
                                                     <li>
                                                         <Link to="/dashbord" className="block px-4 p-2 hover:bg-gray-100">Dashboard</Link>
                                                     </li>
                                                     <li>
-                                                          <button onClick={handleUserLogout} className='btn w-full btn-sm lg:btn-md bg-green-500 text-white'>Logout</button>
+                                                        <button onClick={handleUserLogout} className='btn w-full btn-sm lg:btn-md bg-green-500 text-white'>Logout</button>
                                                     </li>
                                                 </ul>
                                             </div>
                                         )
-                                }
-                              
+                                    }
+
+                                </div>
                             </div>
-                             </div>
                             :
 
                             <div className='md:flex hidden items-center justify-center gap-3'>
@@ -140,7 +138,7 @@ const Nav = () => {
 
             </div>
 
-            
+
         </nav>
     );
 };
