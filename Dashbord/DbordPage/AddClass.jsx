@@ -21,6 +21,7 @@ const AddClass = () => {
         data.Image = response?.data?.data?.url
         data.Reviews = [];
         data.PublishAsgnment= []
+        data.TeacherImage = User?.photoURL
         data.PostedAsgnment = []
         
         const result = await axios.post(`${import.meta.env.VITE_API_URL}/insert-class`, data )
