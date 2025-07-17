@@ -1,6 +1,6 @@
 import React from 'react';
 
-const MyClassCard = ({ cls }) => {
+const MyClassCard = ({ cls , handleClassDelete , handleClassUpdate}) => {
     return (
 <div className="p-4 bg-white rounded-lg shadow text-sm w-full sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg h-fit">
     <div className="relative">
@@ -36,8 +36,12 @@ const MyClassCard = ({ cls }) => {
     </div>
 
     <div className="w-full flex flex-wrap justify-between gap-2 mt-2">
-        <button className="btn btn-sm flex-1 min-w-[100px] btn-primary">Update</button>
-        <button className="btn btn-sm flex-1 min-w-[100px] btn-error text-white">Delete</button>
+        <button 
+        onClick={()=>handleClassUpdate(cls._id)}
+        className="btn btn-sm flex-1 min-w-[100px] btn-primary">Update</button>
+        <button 
+        onClick={()=>handleClassDelete(cls._id)}
+        className="btn btn-sm flex-1 min-w-[100px] btn-error text-white">Delete</button>
         <button className="btn btn-sm flex-1 min-w-[100px] btn-success text-white">See Details</button>
     </div>
 </div>
