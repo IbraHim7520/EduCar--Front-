@@ -23,6 +23,7 @@ import TeacherReq from "../Dashbord/DbordPage/TcherReq"
 import { Component } from "react";
 import ClassDetails from "../Pages/ClassDetails";
 import axios from "axios";
+import MyClassDetails from "../Dashbord/DbordPage/MyClassDetails";
 
 
 const BaseUser = [
@@ -89,7 +90,12 @@ const router = createBrowserRouter([
             {path: "all-classes", Component:AllClass},
             {path:"teacher-requests", Component:TeacherReq},
             {path:"my-profile",Component:MyProfile}
+            
         ]
+    },
+    {
+        path: "/my-class-details/:id",
+        Component: MyClassDetails
     }
 ])
 export default router

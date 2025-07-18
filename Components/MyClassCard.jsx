@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 
 const MyClassCard = ({ cls , handleClassDelete , handleClassUpdate}) => {
     return (
@@ -42,7 +43,7 @@ const MyClassCard = ({ cls , handleClassDelete , handleClassUpdate}) => {
         <button 
         onClick={()=>handleClassDelete(cls._id)}
         className="btn btn-sm flex-1 min-w-[100px] btn-error text-white">Delete</button>
-        <button className="btn btn-sm flex-1 min-w-[100px] btn-success text-white">See Details</button>
+        <Link to={`/my-class-details/${cls._id}`} className="btn btn-sm flex-1 min-w-[100px] btn-success text-white">See Details</Link>
     </div>
 </div>
 
