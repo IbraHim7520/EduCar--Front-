@@ -24,6 +24,8 @@ import { Component } from "react";
 import ClassDetails from "../Pages/ClassDetails";
 import axios from "axios";
 import MyClassDetails from "../Dashbord/DbordPage/MyClassDetails";
+import Payment from "../Pages/Payment";
+import EnrollClassDetails from "../Dashbord/DbordPage/EnrollClassDetails";
 
 
 const BaseUser = [
@@ -96,6 +98,14 @@ const router = createBrowserRouter([
     {
         path: "/my-class-details/:id",
         Component: MyClassDetails
+    },
+    {
+        path: "/make-payment/:id",
+        Component: Payment
+    },
+    {
+        path: "/enrolled-class-details/:id",
+        Component:EnrollClassDetails
     }
 ])
 export default router

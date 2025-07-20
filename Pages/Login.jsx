@@ -23,7 +23,7 @@ const Login = () => {
                     navigate("/");
                 }
             }).catch(err=>{
-                console.log(err)
+               
                 setLoading(false)
                 toast.error("Invalid credentials!")
             })

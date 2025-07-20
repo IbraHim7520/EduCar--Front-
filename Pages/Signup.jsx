@@ -8,42 +8,49 @@ import auth from "../Firebase/firebase.config.js"
 import { updateProfile } from 'firebase/auth';
 import axios from 'axios';
 import Loading from '../Components/Loading.jsx';
+import { useMutation } from '@tanstack/react-query';
 
 const Signup = () => {
     const navigate = useNavigate()
     const {register   , handleSubmit, reset} = useForm()
     const {SignupUser , GoogleLogin} = useAuth()
     const [loading , setLoading] = useState(false)
-    const handleGoogleSignup = () =>{
-        setLoading(true)
+    const { mutate: createUserRole } = useMutation({
+        mutationFn: async (RoleData) => {
+            const response = await axios.post(`${import.meta.env.VITE_API_URL}/userrole`, { RoleData });
+            return response.data;
+        },
+        onSuccess: () => {
+            toast.success("Signup Successfull!");
+            navigate("/");
+            setLoading(false);
+        },
+        onError: () => {
+            setLoading(false);
+            toast.error("Something went wrong!");
+        }
+    });
+
+    const handleGoogleSignup = () => {
+        setLoading(true);
         GoogleLogin()
-        .then(result => {
-            if(result){
-            const RoleData = {
-                Name: result?.user?.displayName || "No Name",
-                Email: result?.user?.email,
-                Role: "Student",
-                isAdmin: false,
-                Image: result?.user?.photoURL
-            }
-            axios.post(`${import.meta.env.VITE_API_URL}/userrole`, {RoleData})
-            .then(data =>{
-                if(data?.data){
-                    console.log(data?.data)
-                    navigate("/")
-                    setLoading(false)
-                    toast.success("Signup Successfull!")
+            .then(result => {
+                if (result) {
+                    const RoleData = {
+                        Name: result?.user?.displayName || "No Name",
+                        Email: result?.user?.email,
+                        Role: "Student",
+                        isAdmin: false,
+                        Image: result?.user?.photoURL
+                    };
+                    createUserRole(RoleData); // 👈 mutation call
                 }
-            }).catch(err=>{
-                setLoading(false)
-                console.log(err)
             })
-            }
-        }).catch(err =>{
-            setLoading(false)
-            toast.error("Something went wrong!")
-        })
-    }
+            .catch(err => {
+                setLoading(false);
+                toast.error("Something went wrong!");
+            });
+    };
     const onSubmit = async (data) =>{
         setLoading(true)
         const {email , password, username , image} = data
@@ -74,7 +81,7 @@ const Signup = () => {
                     
                 }
             }).catch(err=>{
-                console.log(err)
+
             })
             })
             setLoading(false);

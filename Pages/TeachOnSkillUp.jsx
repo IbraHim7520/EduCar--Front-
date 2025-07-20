@@ -6,7 +6,7 @@ import toast from 'react-hot-toast';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import unableToSubmitImg from "../imgs/unable.jpg"
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 
 
 const TeachOnSkillUp = () => {
@@ -24,7 +24,7 @@ const TeachOnSkillUp = () => {
     } , [User?.email , setValue, User?.photoURL] )
 
     const insertID = localStorage.getItem("insertID")
-    console.log(insertID)
+ 
     const {data} = useQuery({
         queryKey: ["getTeacherReq"],
         queryFn: async()=>{
@@ -38,26 +38,33 @@ const TeachOnSkillUp = () => {
             setRequestStatus(data?.data?.Status);
         }
     }, [data])
-  
-    const onSubmit = async (data) => {
+
+
+        const { mutate: submitTeacherRequest } = useMutation({
+        mutationFn: async (formData) => {
+            return await axios.post(`${import.meta.env.VITE_API_URL}/post-teachereq`, { data: formData });
+        },
+        onSuccess: (res) => {
+            if (res?.data) {
+                toast.success("Application submission success!");
+                setRequestStatus("Pending");
+                localStorage.setItem("insertID", res?.data?.insertedId);
+                reset();
+            }
+        },
+        onError: () => {
+            toast.error("Something went wrong!");
+        }
+    });
+
+    const onSubmit = (formData) => {
         if (!User) {
-            toast.error("Please login to be a teacher")
-            return
+            toast.error("Please login to be a teacher");
+            return;
         }
-        data.Status = "Pending"
-       // console.log(data)
-        const result = await axios.post(`${import.meta.env.VITE_API_URL}/post-teachereq` , {data})
-       // console.log(result);
-        if(result?.data){
-            toast.success("Application submission success!")
-            setRequestStatus("Pending");
-            console.log(result?.data?.insertedId)
-            localStorage.setItem("insertID", result?.data?.insertedId);
-            reset();
-        }
-        
-    }
-    //console.log(submit)
+        formData.Status = "Pending";
+        submitTeacherRequest(formData);
+    };
     return (
         <div>
             {

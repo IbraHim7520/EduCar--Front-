@@ -21,7 +21,7 @@ const ClassCard = ({ clases }) => {
     <div className="mt-5">
       <div className="flex justify-between items-center">
         <h1 className="text-xl font-bold">${clases.ClassPrice}</h1>
-        <Link to={`class-details/${clases._id}`} className="btn btn-sm lg:btn-md px-6 bg-green-500 text-white">Enroll</Link>
+        <Link to={`/class-details/${clases._id}`} className="btn btn-sm lg:btn-md px-6 bg-green-500 text-white">Enroll</Link>
       </div>
 
       <hr className="text-gray-400 my-4" />
@@ -30,7 +30,7 @@ const ClassCard = ({ clases }) => {
         <div className="flex items-center gap-2">
           <div className="avatar">
             <div className="w-9 rounded-full">
-              <img src={clases.Uploader} alt="teacher" />
+              <img src={clases?.Uploader} alt="teacher" />
             </div>
           </div>
           <p className="text-md font-semibold">{clases.TeacherName}</p>

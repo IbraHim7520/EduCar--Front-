@@ -27,7 +27,6 @@ const TcherReq = () => {
     }
     const handleRequestReject = async(id) =>{
     const result = await axios.put(`${import.meta.env.VITE_API_URL}/reject-req/${id}`)
-    console.log(result?.data);
         if(result?.data?.modifiedCount > 0 ){
             setAproveInfo("Rejected")
             toast.success("Request Rejected!")
@@ -72,7 +71,7 @@ const TcherReq = () => {
                                         {
                                             ReqInfo.map((request, index) => <Table 
                                             updateRequestStatus={updateRequestStatus}  
-                                            key={index} index={index}  
+                                            key={index} 
                                             handleRequestReject={handleRequestReject}
                                             aproveInfo={aproveInfo}
                                             request={request}></Table>)

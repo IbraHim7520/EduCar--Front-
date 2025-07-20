@@ -37,14 +37,14 @@ const MyClassDetails = () => {
     }
     const onSubmit = async(formData) => {
         console.log(formData)
-        const result = await axios.put(`${import.meta.env.VITE_API_URL}/add-assignment/${classId}`, {formData})
+        formData.PostedAsgnment = [];
+       const result = await axios.put(`${import.meta.env.VITE_API_URL}/add-assignment/${classId}`, {formData})
         if(result?.data?.modifiedCount > 0){
             reset()
             const modal = document.getElementById("modal");
         modal.close();
         toast.success("Assignment added successfully.")
         setTotalAssignment(totalAssignment + 1);
-
         }
     }
     return (

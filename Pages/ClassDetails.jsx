@@ -1,16 +1,25 @@
-import React, { useState } from 'react';
-import { useLoaderData } from 'react-router';
+import React, { useEffect, useState } from 'react';
+import { Link, useLoaderData } from 'react-router';
 import { MdEmail } from "react-icons/md";
 import { FaUsers } from "react-icons/fa";
 import ReviewCard from '../Components/ReviewCard';
 import NoDataImage from "../imgs/nodata.jpg"
+import useAuth from "../CustomHooks/useAuth"
 const ClassDetails = () => {
     const data = useLoaderData()
     const [classData , setClassData] = useState(data?.data)
+    const {User} = useAuth()
+    const [enrollEmail , setEnrollerEmail] = useState(null);
+
+    useEffect( ()=>{
+    //  console.log(User)
+      const email = classData.EnrolledBy.find(cls => cls.StudentEmail === User?.email)
+      setEnrollerEmail(email?.StudentEmail)
+    } , [User , classData])
+
    
     return (
        <div className="w-full flex flex-col min-h-screen bg-gradient-to-r from-white via-blue-50 to-blue-100 text-gray-800">
-      {/* Banner Section */}
       <div className="w-full h-[300px] sm:h-[400px] overflow-hidden">
         <img
           src={classData.Image}
@@ -18,23 +27,29 @@ const ClassDetails = () => {
           className="w-full h-full object-cover object-center"
         />
       </div>
-
-      {/* Content Section */}
       <section className="max-w-6xl mx-auto px-4 sm:px-8 py-10 space-y-8">
-        {/* Title and Price */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <h1 className="text-3xl sm:text-4xl font-bold">{classData.ClassTitle}</h1>
           <span className="text-xl font-semibold text-green-600 bg-green-100 px-4 py-1 rounded-full">
             ${classData.ClassPrice}
           </span>
         </div>
-
-        {/* Description */}
         <p className="text-lg leading-relaxed">{classData.Description}</p>
-
-        {/* Actions */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-          <button className="btn btn-primary px-8">Enroll Now</button>
+          <div>
+           {
+            enrollEmail ? 
+              <Link to={"/dashbord"} className='btn btn-primary'>Go to Dashbord</Link>
+            :
+            <div>
+               <Link to={`/make-payment/${classData._id}`} disabled={classData.TeacherEmail === User?.email ? true : false } className="btn btn-primary px-8">Enroll Now</Link>
+            {
+              User?.email === classData.TeacherEmail && <p className='text-sm text-red-500'>You cannot enroll on your own published class</p>
+            }
+            </div>
+           }
+          </div>
+          
           <div className="flex items-center gap-6 text-sm text-gray-700">
             <span className="badge badge-info text-white">Status: {classData.Status}</span>
             <span className="flex items-center gap-1 text-base">
