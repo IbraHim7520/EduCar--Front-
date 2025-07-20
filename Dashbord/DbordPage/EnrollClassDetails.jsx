@@ -66,6 +66,7 @@ const EnrollClassDetails = () => {
     });
 
     const onSubmit = async(Evaluationdata) =>{
+        Evaluationdata.Rating = parseInt(Evaluationdata.Rating)
         Evaluationdata.Reviewedby = User?.email
         Evaluationdata.ReviewerImage = User?.photoURL
         Evaluationdata.ClassTitle =  data?.ClassTitle
