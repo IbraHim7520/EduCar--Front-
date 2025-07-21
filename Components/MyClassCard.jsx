@@ -43,7 +43,7 @@ const MyClassCard = ({ cls , handleClassDelete , handleClassUpdate}) => {
         <button 
         onClick={()=>handleClassDelete(cls._id)}
         className="btn btn-sm flex-1 min-w-[100px] btn-error text-white">Delete</button>
-        <Link to={`/my-class-details/${cls._id}`} className="btn btn-sm flex-1 min-w-[100px] btn-success text-white">See Details</Link>
+        <Link to={`/my-class-details/${cls._id}`}  className={cls.Status === "Approved" ? 'btn btn-sm flex-1 min-w-[100px]  btn-success text-white': "btn btn-sm flex-1 min-w-[100px] btn-disabled btn-success text-white"}>See Details</Link>
     </div>
 </div>
 

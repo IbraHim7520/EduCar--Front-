@@ -9,7 +9,7 @@ const AllClass = () => {
     const { data } = useQuery({
         queryKey: ["topClasses"],
         queryFn: async () => {
-            const result = await axios.get(`${import.meta.env.VITE_API_URL}/top-classes`)
+            const result = await axios.get(`${import.meta.env.VITE_API_URL}/all-classes`)
             return result
         }
     })

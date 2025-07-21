@@ -5,6 +5,7 @@ import { FaUsers } from "react-icons/fa";
 import ReviewCard from '../Components/ReviewCard';
 import NoDataImage from "../imgs/nodata.jpg"
 import useAuth from "../CustomHooks/useAuth"
+import toast from 'react-hot-toast';
 const ClassDetails = () => {
     const data = useLoaderData()
     const [classData , setClassData] = useState(data?.data)
@@ -13,11 +14,13 @@ const ClassDetails = () => {
     const [enrollEmail , setEnrollerEmail] = useState(null);
 
     useEffect( ()=>{
-    //  console.log(User)
+      if(UserRole?.Role === "Admin" || UserRole?.Role === "Teacher"){
+          toast.error("Admin or Teacher can't enroll")
+      }
       const email = classData.EnrolledBy.find(cls => cls.StudentEmail === User?.email)
       setEnrollerEmail(email?.StudentEmail)
 
-    } , [User , classData])
+    } , [User , classData, UserRole])
 
    
     return (

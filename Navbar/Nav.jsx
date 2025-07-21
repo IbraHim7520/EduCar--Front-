@@ -9,7 +9,7 @@ import toast from 'react-hot-toast';
 
 const Nav = () => {
     const [menuOpen, setMenuOpen] = useState(false);
-    const { User, UserLogout, setUser } = useAuth()
+    const { User, UserLogout, setUser , UserRole } = useAuth()
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const handleMenuShow = () => {
         setMenuOpen(!menuOpen);
@@ -23,14 +23,14 @@ const Nav = () => {
 
     return (
         <nav className="h-[70px] relative w-full px-6 md:px-16 lg:px-24 xl:px-32 flex items-center justify-between z-20 bg-white text-gray-700 shadow-[0px_4px_25px_0px_#0000000D] transition-all">
-            <a href="#">
+            <Link to={"/"}>
                 <img
                     className=" w-32"
                     src={WebLogo}
 
                     alt="dummyLogoColored"
                 />
-            </a>
+            </Link>
 
             <div className='md:block hidden'>
                 <ul className='flex justify-center font-semibold xl:text-lg items-center gap-4'>
@@ -50,7 +50,7 @@ const Nav = () => {
                                         dropdownOpen && (
                                             <div className="absolute top-12 right-0 bg-white shadow-md rounded-sm w-40 z-50">
                                                 <ul className=" space-y-2">
-                                                    <li className='px-4 p-2'>{User.displayName || "No Name"}</li>
+                                                    <li className='px-4 p-2 flex justify-center items-center gap-1'>{User.displayName || "No Name"} <span className='text-xs text-gray-500 '>({UserRole.Role})</span> </li>
                                                     <li>
                                                         <Link to="/dashbord" className="block px-4 p-2 hover:bg-gray-100">Dashboard</Link>
                                                     </li>
@@ -111,7 +111,7 @@ const Nav = () => {
                                         dropdownOpen && (
                                             <div className="absolute top-12  bg-white shadow-md rounded-sm w-40 z-50">
                                                 <ul className=" space-y-2">
-                                                    <li className='px-4 p-2'>{User.displayName || "No Name"}</li>
+                                                     <li className='px-4 p-2 flex justify-center gap-1 items-center '>{User.displayName || "No Name"} <span className='text-xs text-gray-500 '>({UserRole.Role})</span> </li>
                                                     <li>
                                                         <Link to="/dashbord" className="block px-4 p-2 hover:bg-gray-100">Dashboard</Link>
                                                     </li>
