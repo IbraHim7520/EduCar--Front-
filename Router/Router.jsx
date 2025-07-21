@@ -20,7 +20,6 @@ import Users from "../Dashbord/DbordPage/Users"
 import AllClass from "../Dashbord/DbordPage/AllClass"
 import TeacherReq from "../Dashbord/DbordPage/TcherReq"
 
-import { Component } from "react";
 import ClassDetails from "../Pages/ClassDetails";
 import axios from "axios";
 import MyClassDetails from "../Dashbord/DbordPage/MyClassDetails";
@@ -28,22 +27,6 @@ import Payment from "../Pages/Payment";
 import EnrollClassDetails from "../Dashbord/DbordPage/EnrollClassDetails";
 
 
-const BaseUser = [
-    {index:true , path: "my-enrollment" , Component:MyEnrollClass },
-    { path:"my-profile", Component:MyProfile }
-]
-const Teacher = [
-    {index: true, path : "my-classes", Component: MyClass},
-    {path:"add-classes", Component:AddClass},
-    {path:"my-profile",Component:MyProfile}
-]
-
-const Admin = [
-    {index:true , path: "all-users", Component:Users },
-    {path: "all-classes", Component:AllClass},
-    {path:"teacher-requests", Component:TeacherReq},
-    {path:"my-profile",Component:MyProfile}
-]
 const router = createBrowserRouter([
     {
         path: "/",
@@ -81,18 +64,37 @@ const router = createBrowserRouter([
         path: "/dashbord",
         Component:Dashbord,
         children: [
-            {index:true , path: "my-enrollment" , Component:MyEnrollClass },
-            { path:"my-profile", Component:MyProfile },
-
-            {path : "my-classes", Component: MyClass},
-            {path:"add-classes", Component:AddClass},
-            {path:"my-profile",Component:MyProfile},
-
-            {path: "all-users", Component:Users },
-            {path: "all-classes", Component:AllClass},
-            {path:"teacher-requests", Component:TeacherReq},
-            {path:"my-profile",Component:MyProfile}
-            
+            {
+                index: true,
+                Component: MyProfile
+            },
+            {
+                path: "my-profile", 
+                Component: MyProfile
+            },
+            {
+                path: "my-enrollment",
+                Component: MyEnrollClass
+            },{
+                path: "my-classes",
+                Component: MyClass
+            },
+            {
+                path: "add-classes",
+                Component: AddClass
+            },
+            {
+                path: "all-users",
+                Component: Users
+            },
+            {
+                path: "all-classes",
+                Component: AllClass
+            },
+            {
+                path:"teacher-requests",
+                Component: TeacherReq
+            },
         ]
     },
     {
@@ -111,18 +113,17 @@ const router = createBrowserRouter([
 export default router
 
 
+// path: "my-profile",
 
 
+            // {index:true , path: "my-enrollment" , Component:MyEnrollClass },
+            // { path:"my-profile", Component:MyProfile },
 
-//----------Student Dashbord-----------------
-// [
-//             {
-//                 index: true,
-//                 path: "my-enrollment",
-//                 Component: MyEnrollClass
-//             },
-//             {
-//                 path: 'my-profile',
-//                 Component: MyProfile
-//             }
-// ]
+            // {path : "my-classes", Component: MyClass},
+            // {path:"add-classes", Component:AddClass},
+            // {path:"my-profile",Component:MyProfile},
+
+            // {path: "all-users", Component:Users },
+            // {path: "all-classes", Component:AllClass},
+            // {path:"teacher-requests", Component:TeacherReq},
+            // {path:"my-profile",Component:MyProfile}

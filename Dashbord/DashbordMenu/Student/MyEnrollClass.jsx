@@ -1,12 +1,14 @@
 import React from 'react';
 import { MdClass } from "react-icons/md";
-import { Link } from 'react-router';
+import { Link, NavLink } from 'react-router';
 const MyEnrollClass = () => {
     return (
-        <Link to={"my-enrollment"} className='flex justify-center bg-green-500 text-lg h-fit py-3 text-white w-full btn items-center md:justify-start '>
+        <NavLink to={"my-enrollment"} 
+        className={({isActive})=> isActive ? 'flex justify-center bg-blue-500 text-lg h-fit py-3 text-white w-full btn items-center md:justify-start ': 'flex justify-center bg-green-500 text-lg h-fit py-3 text-white w-full btn items-center md:justify-start'}
+        >
         <MdClass size={25}/>
         <p className='hidden md:block'>My Enrolled Class</p>
-        </Link>
+        </NavLink>
     );
 };
 

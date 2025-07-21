@@ -1,46 +1,40 @@
 import React, { useEffect, useState } from 'react';
 import useAuth from '../CustomHooks/useAuth';
-import { useNavigate } from 'react-router';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import axios from 'axios';
-import Swal from 'sweetalert2';
 import unableToSubmitImg from "../imgs/unable.jpg"
 import { useMutation, useQuery } from '@tanstack/react-query';
 
-
 const TeachOnSkillUp = () => {
-    const { User, UserRole } = useAuth()
-
+    const { User, UserRole } = useAuth();
     const [requestStatus , setRequestStatus] = useState('');
-  
-    const { register, handleSubmit, setValue, formState: { errors }, reset } = useForm()
+    const { register, handleSubmit, setValue, formState: { errors }, reset } = useForm();
 
-    useEffect( ()=>{
+    useEffect(() => {
         if(User?.email && User?.photoURL){
-            setValue("TeacherMail" , User.email)
-            setValue("TeacherImage", User.photoURL)
+            setValue("TeacherMail", User.email);
+            setValue("TeacherImage", User.photoURL);
         }
-    } , [User?.email , setValue, User?.photoURL] )
+    }, [User?.email, setValue, User?.photoURL]);
 
-    const insertID = localStorage.getItem("insertID")
- 
-    const {data} = useQuery({
+    const insertID = localStorage.getItem("insertID");
+
+    const { data } = useQuery({
         queryKey: ["getTeacherReq"],
-        queryFn: async()=>{
-            const result = axios.get(`${import.meta.env.VITE_API_URL}/get-tecReq/${insertID}`)
-            return result
+        queryFn: async () => {
+            const result = await axios.get(`${import.meta.env.VITE_API_URL}/get-tecReq/${insertID}`);
+            return result;
         }
-    })
+    });
 
-    useEffect(()=>{
+    useEffect(() => {
         if(data?.data?.Status){
-            setRequestStatus(data?.data?.Status);
+            setRequestStatus(data.data.Status);
         }
-    }, [data])
+    }, [data]);
 
-
-        const { mutate: submitTeacherRequest } = useMutation({
+    const { mutate: submitTeacherRequest } = useMutation({
         mutationFn: async (formData) => {
             return await axios.post(`${import.meta.env.VITE_API_URL}/post-teachereq`, { data: formData });
         },
@@ -48,7 +42,7 @@ const TeachOnSkillUp = () => {
             if (res?.data) {
                 toast.success("Application submission success!");
                 setRequestStatus("Pending");
-                localStorage.setItem("insertID", res?.data?.insertedId);
+                localStorage.setItem("insertID", res.data.insertedId);
                 reset();
             }
         },
@@ -65,16 +59,18 @@ const TeachOnSkillUp = () => {
         formData.Status = "Pending";
         submitTeacherRequest(formData);
     };
+
     return (
         <div>
             {
-                UserRole?.Role === "Teacher" || UserRole?.Role === "Admin" ?
+                UserRole?.Role === "Teacher" || UserRole?.Role === "Admin" ? (
                     <div className='w-full min-h-screen flex flex-col justify-center items-center space-y-2'>
-                            <img src={unableToSubmitImg} className='max-w-96'></img>
-                            <p className='text-xl font-semibold'>You are in already Teacher or Admin role, So you cannot Post for Teacher Post</p>
-                            
+                        <img src={unableToSubmitImg} className='max-w-96' alt="Not allowed" />
+                        <p className='text-xl font-semibold'>
+                            You are already in Teacher or Admin role, so you cannot apply to become a teacher again.
+                        </p>
                     </div>
-                    :
+                ) : (
                     <div>
                         <div className="max-w-4xl mx-auto text-center px-4 py-6">
                             <h1 className="text-3xl md:text-5xl font-bold text-gray-800 mb-2">
@@ -162,21 +158,21 @@ const TeachOnSkillUp = () => {
                                 </select>
                             </div>
 
-                            {/* Submit Button */}
+                            {/* ✅ Submit Button (fixed - removed onClick) */}
                             <div className='text-center'>
-                               {
-                                requestStatus === "Pending" ?
-                                <button onClick={()=>handleSubmit(onSubmit) } className='px-16 btn bg-green-500 text-white' disabled>Submit</button>
-                                :
-                                <button onClick={()=>handleSubmit(onSubmit) } className='px-16 btn bg-green-500 text-white'>Submit for another review</button>
-                               }
+                                <button
+                                    type="submit"
+                                    className='px-16 btn bg-green-500 text-white'
+                                    disabled={requestStatus === "Pending"}
+                                >
+                                    {requestStatus === "Pending" ? "Submitted (Pending)" : "Submit for review"}
+                                </button>
                             </div>
                         </form>
                     </div>
-
+                )
             }
         </div>
-     
     );
 };
 

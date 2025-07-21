@@ -34,7 +34,7 @@ const BeaTeacher = () => {
                             <li> Certificate of Completion</li>
                             <li> Free Trial 7 Days</li>
                         </ul>
-                        <Link className='btn bg-green-500 text-white px-12'>Enroll Today</Link>
+                        <Link to={"/get-all-classes"} className='btn bg-green-500 text-white px-12'>Enroll Today</Link>
                     </div>
             </div>
         </div>

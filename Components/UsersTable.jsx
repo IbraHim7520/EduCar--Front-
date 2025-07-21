@@ -1,6 +1,6 @@
 import React from 'react';
 
-const UsersTable = ({ request, index, handleMakeAdmin , adminRole }) => {
+const UsersTable = ({ request, index, handleMakeAdmin  }) => {
     return (
         <tr>
             <td>{index + 1}</td>
@@ -15,7 +15,7 @@ const UsersTable = ({ request, index, handleMakeAdmin , adminRole }) => {
             <td>{request.Email}</td>
             <td>{request.Role}</td>
             <td>
-                <button onClick={() => handleMakeAdmin(request._id)} disabled={ adminRole || request.Role === "Admin" ? true : false } className='btn btn-sm bg-green-500 text-white'>Make Admin</button>
+                <button onClick={() => handleMakeAdmin(request._id)} disabled={  request.Role === "Admin" ? true : false } className='btn btn-sm bg-green-500 text-white'>Make Admin</button>
             </td>
         </tr>
     );

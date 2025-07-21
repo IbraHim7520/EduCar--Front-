@@ -30,7 +30,7 @@ const ClassCard = ({ clases }) => {
         <div className="flex items-center gap-2">
           <div className="avatar">
             <div className="w-9 rounded-full">
-              <img src={clases?.Uploader} alt="teacher" />
+              <img src={clases?.TeacherImage} alt="teacher" />
             </div>
           </div>
           <p className="text-md font-semibold">{clases.TeacherName}</p>

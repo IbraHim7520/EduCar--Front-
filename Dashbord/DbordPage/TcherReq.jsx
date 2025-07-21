@@ -8,15 +8,20 @@ const TcherReq = () => {
     const [ReqInfo, setRequestInfo] = useState([]);
     const [loading, setLoading] = useState(true)
   const [aproveInfo , setAproveInfo] = useState('')
-
+    const {User} = useAuth()
     useEffect(() => {
-        const token = localStorage.getItem('token');
-        axios.get(`${import.meta.env.VITE_API_URL}/get-teacher-request/${User?.email}`)
+    
+        axios.get(`${import.meta.env.VITE_API_URL}/get-teacher-request`)
             .then(data => {
                 setRequestInfo(data?.data);
                 setLoading(false)
+            }).catch((err)=>{
+setRequestInfo([]);
+                setLoading(false)
             })
-    }, [])
+                
+            
+    }, [User])
 
   const updateRequestStatus = async(id) =>{
     
@@ -75,6 +80,7 @@ const TcherReq = () => {
                                             ReqInfo.map((request, index) => <Table 
                                             updateRequestStatus={updateRequestStatus}  
                                             key={index} 
+                                            index={index}
                                             handleRequestReject={handleRequestReject}
                                             aproveInfo={aproveInfo}
                                             request={request}></Table>)

@@ -43,7 +43,7 @@ const Nav = () => {
                                 <div className="relative">
                                     <div className="avatar">
                                         <div onClick={() => setDropdownOpen(!dropdownOpen)} className="ring-primary ring-offset-base-100 w-8 rounded-full ring-2 ring-offset-2">
-                                            <img src={User.photoURL} />
+                                            <img src={User?.photoURL} />
                                         </div>
                                     </div>
                                     {
@@ -104,7 +104,7 @@ const Nav = () => {
                                 <div className="relative">
                                     <div className="avatar">
                                         <div onClick={() => setDropdownOpen(!dropdownOpen)} className="ring-primary ring-offset-base-100 w-8 rounded-full ring-2 ring-offset-2">
-                                            <img src={User.photoURL} />
+                                            <img src={User?.photoURL} />
                                         </div>
                                     </div>
                                     {
