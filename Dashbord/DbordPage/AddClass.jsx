@@ -32,7 +32,8 @@ const AddClass = () => {
                 Reviews: [],
                 PublishAsgnment: [],
                 TeacherImage: User?.photoURL,
-                PostedAsgnment: [],
+                SubmittedAsgnment: []
+              
             };
             const result = await axios.post(
                 `${import.meta.env.VITE_API_URL}/insert-class`,

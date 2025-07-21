@@ -22,10 +22,10 @@ const MyClassDetails = () => {
             setOneClass(data?.data)
             setTotalClassEnroll(oneClass?.EnrolledBy?.length)
             setTotalAssignment(oneClass?.PublishAsgnment?.length)
-            setTotalAssignmentSubmission(oneClass?.PostedAsgnment?.length);
+            setTotalAssignmentSubmission(oneClass?.SubmittedAsgnment?.length);
         }
     }, [
-        data, oneClass?.EnrolledBy?.length, oneClass?.PublishAsgnment?.length, oneClass?.PostedAsgnment?.length
+        data, oneClass?.EnrolledBy?.length, oneClass?.PublishAsgnment?.length, oneClass?.SubmittedAsgnment?.length
     ])
     const handleOpenModal = () => {
         const modal = document.getElementById("modal");

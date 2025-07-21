@@ -1,6 +1,7 @@
 import React from 'react';
 import useAuth from '../../CustomHooks/useAuth';
 import noUser from "../../imgs/noUser.jpg"
+import { Link } from 'react-router';
 const MyProfile = () => {
 
     const { User, UserRole } = useAuth()
@@ -24,14 +25,14 @@ const MyProfile = () => {
                     </div>
                       <div className='flex justify-between items-center'>
                         <p className='text-xl font-semibold text-black'>Facebook:</p>
-                        <p className='text-xl font-semibold '>{"Student"}</p>
+                        <p className='text-xl font-semibold '>{"N/A"}</p>
                     </div>
                       <div className='flex justify-between items-center'>
                         <p className='text-xl font-semibold text-black'>Number:</p>
-                        <p className='text-xl font-semibold '>{"Student"}</p>
+                        <p className='text-xl font-semibold '>{"N/A"}</p>
                     </div>
                 </div>
-                <button className='btn btn-error text-white px-12 mt-12'>Logout</button>
+                <Link to={"/"} className='btn btn-error text-white px-12 mt-12'>Logout</Link>
             </div>
         </div>
     );

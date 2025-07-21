@@ -7,7 +7,7 @@ import AllClassTable from '../../Components/AllClassTable';
 import toast from 'react-hot-toast';
 const AllClass = () => {
     ///getallclass
-    const [btnStats, setBtnStats] = useState('');
+    const [btnStats, setBtnStats] = useState({});
     const [classinfo, setClassInfo] = useState([])
     const [loading, setLoading] = useState(true)
     const { data, isPending, error, refetch } = useQuery({
@@ -30,7 +30,7 @@ const AllClass = () => {
     const handleApproveClass = async (id) => {
         const res = await axios.put(`${import.meta.env.VITE_API_URL}/aprove-cls/${id}`)
         if (res?.data?.modifiedCount > 0) {
-            setBtnStats('Approved')
+             setBtnStats(prev => ({ ...prev, [id]: 'Approved' }));
             toast.success("Class approved")
         }
     }
@@ -38,7 +38,7 @@ const AllClass = () => {
     const handleClassReject = async (id) => {
         const serverResponse = await axios.delete(`${import.meta.env.VITE_API_URL}/reject-cls/${id}`)
         if (serverResponse?.data?.modifiedCount > 0) {
-            setBtnStats('Rejected')
+             setBtnStats(prev => ({ ...prev, [id]: 'Rejected' }));
             toast.success("Class Rejected!")
         }
     }
@@ -93,7 +93,7 @@ const AllClass = () => {
                                                                         key={index} index={index}
                                                                         handleApproveClass={handleApproveClass}
                                                                         handleClassReject={handleClassReject}
-                                                                        btnStats={btnStats}
+                                                                         btnStats={btnStats[request._id]}
                                                                         request={request}></AllClassTable>)
                                                                 }
                                                             </tbody>

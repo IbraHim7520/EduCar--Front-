@@ -8,13 +8,15 @@ import useAuth from "../CustomHooks/useAuth"
 const ClassDetails = () => {
     const data = useLoaderData()
     const [classData , setClassData] = useState(data?.data)
-    const {User} = useAuth()
+    const {User, UserRole} = useAuth()
+
     const [enrollEmail , setEnrollerEmail] = useState(null);
 
     useEffect( ()=>{
     //  console.log(User)
       const email = classData.EnrolledBy.find(cls => cls.StudentEmail === User?.email)
       setEnrollerEmail(email?.StudentEmail)
+
     } , [User , classData])
 
    
@@ -36,7 +38,12 @@ const ClassDetails = () => {
         </div>
         <p className="text-lg leading-relaxed">{classData.Description}</p>
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-          <div>
+        <div>
+          {
+            UserRole?.Role === "Admin" || UserRole?.Role ==="Teacher" ? 
+            <button className='btn btn-primary' disabled>Enroll now</button>
+            :
+                      <div>
            {
             enrollEmail ? 
               <Link to={"/dashbord"} className='btn btn-primary'>Go to Dashbord</Link>
@@ -49,6 +56,8 @@ const ClassDetails = () => {
             </div>
            }
           </div>
+          }
+        </div>
           
           <div className="flex items-center gap-6 text-sm text-gray-700">
             <span className="badge badge-info text-white">Status: {classData.Status}</span>

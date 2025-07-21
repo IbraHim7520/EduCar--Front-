@@ -12,7 +12,7 @@ const EnrollClassDetails = () => {
     const classId =  useParams().id;
     const [classAssignment , setClassAssignment] = useState([]);
     const [loading, setLoading] = useState(true)
-    const [submissionCount, setSubmissionCount] = useState(0);
+    const [submissionCount , setSubmissionCount]= useState(0);
     const {register ,  handleSubmit , reset} = useForm()
     const {User} = useAuth()
     const {data} =  useQuery({
@@ -26,13 +26,22 @@ const EnrollClassDetails = () => {
     useEffect( ()=>{
         if(data){
             setLoading(false)
+            setSubmissionCount(data?.SubmittedAsgnment?.length)
             setClassAssignment(data?.PublishAsgnment);
  
         }
 
     }, [data])
     const handleAssignmentSubmission = async(id, classObeject) =>{
-           alert(id)
+        classObeject.SubmittedBy = User?.displayName;
+        classObeject.SubmitterEmail = User?.email
+        
+        const response = await axios.put(`${import.meta.env.VITE_API_URL}/submit-assignment/${id}`, {classObeject})
+       if(response?.data?.modifiedCount > 0){
+        setSubmissionCount(submissionCount+1)
+        toast.success("Assignment has been submitted.")
+       }
+    
     }
 
 
@@ -112,7 +121,10 @@ const EnrollClassDetails = () => {
                             </div>
                             :
                             <div className="overflow-x-auto">
-                            <div className='w-full flex justify-end items-center'>
+                            <div className='w-full flex justify-between mb-8 items-center'>
+                            <div className='px-8 btn btn-success text-white'>
+                                Submission {submissionCount}
+                            </div>
                                 <div onClick={openModal} className='flex btn justify-end btn-success w-fit  items-center'>
                                     <MdAdd></MdAdd>
                                     <p>Create TER</p>
@@ -125,7 +137,6 @@ const EnrollClassDetails = () => {
                                             <th>Assignment Title</th>  
                                             <th>Assignment Description</th>
                                             <th>Deadline</th>
-                                            <th>Submission</th>
                                             <th>Button</th>
                                         </tr>
                                     </thead>
@@ -139,6 +150,7 @@ const EnrollClassDetails = () => {
                                             handleAssignmentSubmission={handleAssignmentSubmission}
                                             data={data}
                                             submissionCount={submissionCount}
+                                            
                                             
                                             >
                                             
