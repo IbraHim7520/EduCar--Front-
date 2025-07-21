@@ -11,7 +11,7 @@ const Reviews = () => {
         }
         getAllReviews()
     }, [] )
-    console.log(reviews)
+ 
     return (
         <div>
             <div className='flex flex-col items-center justify-center p-5 md:p-12 lg:p-24 '>

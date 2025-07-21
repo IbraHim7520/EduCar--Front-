@@ -20,7 +20,11 @@ const MyClass = () => {
         queryKey: ["gtMyClass"],
         enabled: !!User?.email,
         queryFn: async () => {
-            const result = await axios.get(`${import.meta.env.VITE_API_URL}/my-class/${User?.email}`)
+            const result = await axios.get(`${import.meta.env.VITE_API_URL}/my-class/${User?.email}`, {
+                headers:{
+                    Authorization: `Bearer ${localStorage.getItem('token')}`
+                }
+            })
             return result?.data
         }
     })

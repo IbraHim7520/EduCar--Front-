@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { use, useEffect, useState } from 'react';
 import AuthenticatonContext from './AuthContext';
 import { createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut } from 'firebase/auth';
 import auth from './firebase.config';
@@ -14,12 +14,16 @@ const AuthProvider = ({ children }) => {
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
-            if (user) {
+            if (user?.email) {
                 setUser(user);
+                axios.post(`${import.meta.env.VITE_API_URL}/jwt`, {email: user?.email})
+                .then(res=>{
+                    console.log(res?.data?.token);
+                    localStorage.setItem('token', res.data.token);
+                })
                 setLoading(false)
-
-
             }
+           
         })
         return () => { unsubscribe() }
     }, [])
@@ -27,7 +31,11 @@ const AuthProvider = ({ children }) => {
     useEffect(() => {
        if(User?.email){
          const getUserRole = async () => {
-            axios.get(`${import.meta.env.VITE_API_URL}/get-role/${User?.email}`)
+            axios.get(`${import.meta.env.VITE_API_URL}/get-role/${User?.email}`, {
+                headers:{
+                    Authorization: `Bearer ${localStorage.getItem('token')}`
+                }
+            })
             .then(data=>{
               //  console.log(data?.data);
                 setUserRole(data?.data);

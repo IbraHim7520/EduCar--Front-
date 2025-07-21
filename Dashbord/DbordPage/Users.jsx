@@ -6,11 +6,12 @@ import Table from '../../Components/Table';
 import UsersTable from '../../Components/UsersTable';
 import toast from 'react-hot-toast';
 import NoDataImage from "../../imgs/nodata.jpg"
-import { faL } from '@fortawesome/free-solid-svg-icons';
+
 const Users = () => {
     const { UserRole } = useAuth()
     const [adminRole, setAdminRole] = useState(false);
     const [users, setusers] = useState([])
+
     const { data, isPending, error, refetch } = useQuery({
         queryKey: ["getAllUsers"],
         queryFn: async () => {

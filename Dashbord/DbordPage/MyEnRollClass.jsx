@@ -12,7 +12,11 @@ const MyEnRollClass = () => {
         queryKey: ["getMyEnrolledClass"],
         enabled: !!User?.email,
         queryFn: async()=>{
-            const response = await axios.get(`${import.meta.env.VITE_API_URL}/my-enrolled-class/${User?.email}`);
+            const response = await axios.get(`${import.meta.env.VITE_API_URL}/my-enrolled-class/${User?.email}`,{
+                headers:{
+                    Authorization: `Bearer ${localStorage.getItem('token')}`
+                }
+            });
             return response?.data
         }
     })

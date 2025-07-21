@@ -10,6 +10,7 @@ const Payment = () => {
 
 
     const classId = useParams().id;
+
     const { data } = useQuery({
         queryKey: ["getOneClass"],
         queryFn: async () => {

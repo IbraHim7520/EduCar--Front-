@@ -3,12 +3,15 @@ import React, { useEffect, useState } from 'react';
 import Table from '../../Components/Table';
 import NoDataImage from "../../imgs/nodata.jpg"
 import toast from 'react-hot-toast';
+import useAuth from "../../CustomHooks/useAuth"
 const TcherReq = () => {
     const [ReqInfo, setRequestInfo] = useState([]);
     const [loading, setLoading] = useState(true)
   const [aproveInfo , setAproveInfo] = useState('')
+
     useEffect(() => {
-        axios.get(`${import.meta.env.VITE_API_URL}/get-teacher-request`)
+        const token = localStorage.getItem('token');
+        axios.get(`${import.meta.env.VITE_API_URL}/get-teacher-request/${User?.email}`)
             .then(data => {
                 setRequestInfo(data?.data);
                 setLoading(false)
