@@ -21,7 +21,7 @@ const ClassCard = ({ clases }) => {
     <div className="mt-5">
       <div className="flex justify-between items-center">
         <h1 className="text-xl font-bold">${clases.ClassPrice}</h1>
-        <Link to={`/class-details/${clases._id}`} className="btn btn-sm lg:btn-md px-6 bg-green-500 text-white">Enroll</Link>
+        <Link to={`/class-details/${clases._id}`} className="btn btn-sm px-6 bg-green-500 text-white">Enroll</Link>
       </div>
 
       <hr className="text-gray-400 my-4" />

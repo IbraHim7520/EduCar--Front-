@@ -33,7 +33,7 @@ const Nav = () => {
             </Link>
 
             <div className='md:block hidden'>
-                <ul className='flex justify-center font-semibold xl:text-lg items-center gap-4'>
+                <ul className='flex justify-center font-semibold text-sm 2xl:text-lg items-center gap-4'>
                     <NavLink to={"/"} className={({ isActive }) => isActive ? 'text-green-500' : 'text-black'}>Home</NavLink>
                     <NavLink to={"/get-all-classes"} className={({ isActive }) => isActive ? 'text-green-500' : 'text-black'}>All Classes</NavLink>
                     <NavLink to={"/teach-in-here"} className={({ isActive }) => isActive ? 'text-green-500' : 'text-black'}>Teach on Skillup</NavLink>
