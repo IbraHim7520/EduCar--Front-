@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
-
+import { FaUsers } from "react-icons/fa";
 const ClassCard = ({ clases }) => {
     return (
 <div className="bg-base-100 hover:scale-105 transition duration-500 flex flex-col justify-between p-3 w-full max-w-sm shadow-sm rounded-xl h-full min-h-[250px]">
@@ -29,13 +29,16 @@ const ClassCard = ({ clases }) => {
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-2">
           <div className="avatar">
-            <div className="w-9 rounded-full">
+            <div className="w-6 rounded-full">
               <img src={clases?.TeacherImage} alt="teacher" />
             </div>
           </div>
-          <p className="text-md font-semibold">{clases.TeacherName}</p>
+          <p className="text-sm font-semibold">{clases.TeacherName}</p>
         </div>
-        <p className="text-md font-semibold">Enrolled: {clases.EnrolledBy.length}</p>
+        <div className='flex justify-center items-center gap-2'>
+        <FaUsers></FaUsers>
+        <p className="text-sm font-semibold">Enrolled: {clases.EnrolledBy.length}</p>
+        </div>
       </div>
     </div>
   </div>
