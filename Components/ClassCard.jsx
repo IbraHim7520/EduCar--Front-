@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router';
 import { FaUsers } from "react-icons/fa";
 const ClassCard = ({ clases }) => {
+  
     return (
 <div className="bg-base-100 hover:scale-105 transition duration-500 flex flex-col justify-between p-3 w-full max-w-sm shadow-sm rounded-xl h-full min-h-[250px]">
   {/* Image section */}
@@ -14,7 +15,7 @@ const ClassCard = ({ clases }) => {
     <div>
       <h1 className="card-title text-xl">{clases.ClassTitle}</h1>
       <p className="text-gray-700 text-sm mt-2">
-        {clases.Description.slice(0, 100)}...
+        {clases.Description.slice(0, 80)}...
       </p>
     </div>
 
