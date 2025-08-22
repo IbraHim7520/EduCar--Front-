@@ -19,7 +19,7 @@ const TopClass = () => {
         }
     }, [data])
     return (
-        <div className='w-full'>
+        <div className='w-full px-5 md:px-8 lg:px-12'>
         
         {
             cls.length==0 ?
@@ -28,10 +28,10 @@ const TopClass = () => {
                                                 <h1 className='text-center text-3xl font-semibold'>No Class Available</h1>
             </div>
             :
-                    <div className='flex flex-col items-center justify-center p-5 md:p-12 lg:p-24 '>
+                    <div className='flex flex-col items-center justify-center  '>
                         <div  className='text-center p-5 mb-12 '>
                     <h1 className='font-bold text-gray-800 text-2xl md:text-4xl xl:text-5xl'>Top <span className='text-green-500'>Classes</span></h1>
-                    <p className='lg:text-xl mt-5'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit magnam libero rerum ex fugit reprehenderit dolorem non quas vitae sunt.</p>
+                    <p className='lg:text-xl mt-5'>Explore our newly added course to enhance your skills and prove youreself as a fighter</p>
             </div>
             <div className='w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-items-center gap-5 space-y-3'>
                 {
