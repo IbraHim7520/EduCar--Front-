@@ -22,7 +22,7 @@ const FeaturesAmount = () => {
     }, [])
     return (
         <div>
-            <div className='flex flex-col items-center justify-center p-5 md:p-12 lg:p-24 '>
+            <div className='flex flex-col items-center justify-center px-5 md:px-8 lg:px-12 p-8 '>
                 <div className='text-center p-5 mb-12 '>
                     <h1 className='font-bold text-gray-800 text-2xl md:text-4xl xl:text-5xl'>Empowering Learners <span className='text-green-500'>Worldwide</span></h1>
                     <p className='lg:text-xl mt-5'>Explore a wide range of courses and join a thriving learning community.</p>

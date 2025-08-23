@@ -22,7 +22,7 @@ const Nav = () => {
     }
 
     return (
-        <nav className="py-4  sticky z-50 top-0 w-full px-6 md:px-16 lg:px-24 xl:px-32 flex items-center justify-between  bg-green-50 text-gray-700 shadow-[0px_4px_25px_0px_#0000000D] transition-all">
+        <nav className=" sticky z-50 top-0 w-full px-5 md:px-8 lg:px-12 p-3 flex items-center justify-between  bg-green-50 text-gray-700 shadow-[0px_4px_25px_0px_#0000000D] transition-all">
             <Link to={"/"}>
                 <img
                     className=" w-32"

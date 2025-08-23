@@ -14,7 +14,7 @@ const Reviews = () => {
  
     return (
         <div>
-            <div className='flex flex-col items-center justify-center p-5 md:p-12 lg:p-24 '>
+            <div className='flex w-full  flex-col items-center justify-center p-8 px-5 md:px-8 lg:px-12 '>
                 <div  className='text-center p-5 mb-12 '>
                     <h1 className='font-bold text-gray-800 text-2xl md:text-4xl xl:text-5xl'>What Our Learners <span className='text-green-500'>Say</span></h1>
                     <p className='lg:text-xl mt-5'>Real experiences from our community sharing their learning journey.</p>

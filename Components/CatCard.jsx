@@ -4,7 +4,7 @@ import React from 'react';
 const CatCard = ({Cat}) => {
   
     return (
-       <div className="card p-5 h-48 space-y-2 flex flex-col justify-center items-center bg-base-100 max-w-96 w-96  shadow-sm 
+       <div className="card p-5 h-48 space-y-2 flex flex-col justify-center items-center bg-base-100 min-w-80 max-w-80  shadow-sm 
                 transition-all duration-300 ease-in-out hover:bg-green-500 hover:text-white group">
     <FontAwesomeIcon
         className=" rounded-full px-4 py-4 transition-all duration-300 ease-in-out 
