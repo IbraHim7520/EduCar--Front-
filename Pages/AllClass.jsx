@@ -36,7 +36,7 @@ const AllClass = () => {
 
     }
     return (
-        <div className='w-full'>
+        <div className='w-full px-5 md:px-8 lg:px-12 p-8'>
             {
                 loading ?
                     <div className='w-full flex h-screen flex-col justify-center items-center '>
@@ -52,7 +52,7 @@ const AllClass = () => {
                                     <h1 className='text-center text-3xl font-semibold'>No data to show</h1>
                                 </div>
                                 :
-                                <div className='w-full p-2 space-y-5 '>
+                                <div className='w-full  space-y-5 '>
                                     <div className='w-full mt-5 flex  justify-end '>
                                         <form  className='flex select justify-between items-center gap-2'>
                                             <select onChange={(e)=>handleFilterData(e)}  defaultValue="Default" className="select select-neutral">

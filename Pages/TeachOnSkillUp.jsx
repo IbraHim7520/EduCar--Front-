@@ -4,13 +4,17 @@ import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import axios from 'axios';
 import unableToSubmitImg from "../imgs/unable.jpg"
+import notLoggedin from "../imgs/notLoggedin.jpg"
 import { useMutation, useQuery } from '@tanstack/react-query';
+import { Link } from 'react-router';
 
 const TeachOnSkillUp = () => {
     const { User, UserRole } = useAuth();
     const [requestStatus , setRequestStatus] = useState('');
     const { register, handleSubmit, setValue, formState: { errors }, reset } = useForm();
 
+
+    // this handle to setuser image and name on Auth
     useEffect(() => {
         if(User?.email && User?.photoURL){
             setValue("TeacherMail", User.email);
@@ -27,6 +31,14 @@ const TeachOnSkillUp = () => {
             return result;
         }
     });
+
+    //useeffect to show an alert modal if user not looged in
+    useEffect( ()=>{
+        if(!User){
+            const modal = document.getElementById('modal');
+            modal.show()
+        }
+    }, [User] )
 
     useEffect(() => {
         if(data?.data?.Status){
@@ -62,6 +74,16 @@ const TeachOnSkillUp = () => {
 
     return (
         <div>
+            <dialog id="modal" className="modal modal-bottom sm:modal-middle">
+                <div className="modal-box flex flex-col justify-center items-center space-y-3">
+                    <img src={notLoggedin} className='max-w-96' />
+                    <p className='md:text-xl lg:text-2xl font-semibold text-red-400'>Please Login befor access this page!</p>
+                    <div className='flex justify-center items-center gap-5'>
+                        <Link to={"/"} className='btn btn-success hover:text-white btn-sm px-5'>Go to home</Link>
+                        <Link to={"/login"} className='btn btn-outline btn-success btn-sm px-5'>Login</Link>
+                    </div>
+                </div>
+            </dialog>
             {
                 UserRole?.Role === "Teacher" || UserRole?.Role === "Admin" ? (
                     <div className='w-full min-h-screen flex flex-col justify-center items-center space-y-2'>
@@ -97,7 +119,7 @@ const TeachOnSkillUp = () => {
                             </div>
 
                             {/* Image (read-only view) */}
-                            <div>
+                            <div className='flex flex-col items-center'>
                                 <label className="label">
                                     <span className="label-text">Profile Image</span>
                                 </label>
