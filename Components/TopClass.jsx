@@ -4,8 +4,10 @@ import React, { useEffect, useState } from 'react';
 import ClassCard from './ClassCard';
 import { Link } from 'react-router';
 import noDataImg from "../imgs/nodata.jpg"
+import { faL } from '@fortawesome/free-solid-svg-icons';
 const TopClass = () => {
     const [cls , setCls] = useState([])
+    const [loading , setLoading] = useState(true)
     const {data } = useQuery({
         queryKey: ["topClasses"],
         queryFn: async()=>{
@@ -16,12 +18,24 @@ const TopClass = () => {
     useEffect(()=>{
         if(data){
             setCls(data?.data)
+            setLoading(false)
+        }else{
+            setCls([])
+            setLoading(false)
         }
     }, [data])
     return (
         <div className='w-full px-5 p-8 md:px-8 lg:px-12'>
         
         {
+            loading ? 
+            <div className='w-fill h-60 flex flex-col justify-center items-center'>
+                    <span className='loading loading-spinner text-green-500'></span>
+                    <p>Loading...</p>
+            </div>
+            :
+            <div className='w-full'>
+                 {
             cls.length==0 ?
             <div className='w-full  flex flex-col justify-center items-center'>
                                                 <img src={noDataImg} className='max-w-72'></img>
@@ -45,6 +59,8 @@ const TopClass = () => {
         </div>
         }
     
+            </div>
+        }
         
         </div>
     );
